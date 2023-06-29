@@ -1,39 +1,48 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>YouTube Letöltő</title>
+    <title>YouTube Letöltés</title>
 </head>
 <body>
-    <h1>YouTube Letöltő</h1>
-    <input type="text" id="youtubeLink" placeholder="Illessz be egy YouTube linket...">
-    <br>
-    <input type="radio" name="mediaType" id="audio" checked>
-    <label for="audio">MP3 letöltése</label>
-    <input type="radio" name="mediaType" id="video">
-    <label for="video">MP4 letöltése</label>
-    <br>
-    <label for="quality">Minőség:</label>
-    <select id="quality">
-        <option value="low">Alacsony</option>
-        <option value="medium">Közepes</option>
-        <option value="high">Magas</option>
-    </select>
-    <br>
-    <button onclick="download()">Letöltés</button>
-
-    <script>
-        function download() {
-            var youtubeLink = document.getElementById("youtubeLink").value;
-            var mediaType = document.getElementById("audio").checked ? "audio" : "video";
-            var quality = document.getElementById("quality").value;
-
-            if (youtubeLink !== "") {
-                var downloadLink = "/download.php?link=" + encodeURIComponent(youtubeLink) + "&type=" + mediaType + "&quality=" + quality;
-                window.location.href = downloadLink;
-            } else {
-                alert("Kérlek, add meg a YouTube linket!");
-            }
+    <h1>YouTube Letöltés</h1>
+    <form method="post">
+        <input type="text" name="youtubeLink" placeholder="YouTube link" required><br><br>
+        <label for="fileType">Fájltípus:</label>
+        <select name="fileType">
+            <option value="audio">Zene (MP3)</option>
+            <option value="video">Video (MP4)</option>
+        </select><br><br>
+        <label for="quality">Minőség:</label>
+        <select name="quality">
+            <option value="high">Magas</option>
+            <option value="medium">Közepes</option>
+            <option value="low">Alacsony</option>
+        </select><br><br>
+        <input type="submit" name="download" value="Letöltés">
+    </form>
+    
+    <?php
+    if (isset($_POST['download'])) {
+        $youtubeLink = $_POST['youtubeLink'];
+        $fileType = $_POST['fileType'];
+        $quality = $_POST['quality'];
+        
+        // Letöltési folyamat
+        if ($fileType === 'audio') {
+            $command = 'youtube-dl -x --audio-format mp3 --audio-quality ' . $quality . ' ' . escapeshellarg($youtubeLink);
+        } else {
+            $command = 'youtube-dl -f bestvideo[height<=' . $quality . ']+' . 'bestaudio/best' . ' ' . escapeshellarg($youtubeLink);
         }
-    </script>
+        
+        // Parancs végrehajtása
+        exec($command, $output, $return_var);
+        
+        if ($return_var === 0) {
+            echo 'A letöltés sikeresen megtörtént.';
+        } else {
+            echo 'Hiba történt a letöltés során.';
+        }
+    }
+    ?>
 </body>
 </html>
