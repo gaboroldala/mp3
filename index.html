@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>YouTube Letöltő</title>
+</head>
+<body>
+    <h1>YouTube Letöltő</h1>
+    <input type="text" id="youtubeLink" placeholder="Illessz be egy YouTube linket...">
+    <br>
+    <input type="radio" name="mediaType" id="audio" checked>
+    <label for="audio">MP3 letöltése</label>
+    <input type="radio" name="mediaType" id="video">
+    <label for="video">MP4 letöltése</label>
+    <br>
+    <label for="quality">Minőség:</label>
+    <select id="quality">
+        <option value="low">Alacsony</option>
+        <option value="medium">Közepes</option>
+        <option value="high">Magas</option>
+    </select>
+    <br>
+    <button onclick="download()">Letöltés</button>
+
+    <script>
+        function download() {
+            var youtubeLink = document.getElementById("youtubeLink").value;
+            var mediaType = document.getElementById("audio").checked ? "audio" : "video";
+            var quality = document.getElementById("quality").value;
+
+            if (youtubeLink !== "") {
+                var downloadLink = "https://example.com/download.php?link=" + encodeURIComponent(youtubeLink) + "&type=" + mediaType + "&quality=" + quality;
+                window.location.href = downloadLink;
+            } else {
+                alert("Kérlek, add meg a YouTube linket!");
+            }
+        }
+    </script>
+</body>
+</html>
