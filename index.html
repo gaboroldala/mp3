@@ -2,7 +2,6 @@
 <html>
 <head>
     <title>YouTube Letöltő</title>
-    <link rel="icon" type="image/x-icon" href="https://cdn4.iconfinder.com/data/icons/meBaze-Freebies/512/download.png">
 </head>
 <body>
     <h1>YouTube Letöltő</h1>
@@ -29,7 +28,7 @@
             var quality = document.getElementById("quality").value;
 
             if (youtubeLink !== "") {
-                var downloadLink = "https://example.com/download.php?link=" + encodeURIComponent(youtubeLink) + "&type=" + mediaType + "&quality=" + quality;
+                var downloadLink = "/download.php?link=" + encodeURIComponent(youtubeLink) + "&type=" + mediaType + "&quality=" + quality;
                 window.location.href = downloadLink;
             } else {
                 alert("Kérlek, add meg a YouTube linket!");
