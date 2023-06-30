@@ -18,7 +18,7 @@ if (isset($_POST['download'])) {
 
         // Letöltési folyamat
         $downloadUrl = ($fileType === 'audio') ? $videoInfo['audioUrl'] : $videoInfo['videoUrl'];
-        downloadFile($downloadUrl, $filename, $extension);
+        downloadFile($downloadUrl, $filename);
     }
 }
 
@@ -57,8 +57,9 @@ function sanitizeFilename($filename) {
 }
 
 // Fájl letöltése
-function downloadFile($url, $filename, $extension) {
-    $downloadFilename = 'zene.' . $extension;
+function downloadFile($url, $filename) {
+    $extension = pathinfo($url, PATHINFO_EXTENSION);
+    $downloadFilename = ($extension === 'mp3' || $extension === 'mp4') ? 'zene.' . $extension : $filename;
     header('Content-Description: File Transfer');
     header('Content-Type: application/octet-stream');
     header('Content-Disposition: attachment; filename="' . $downloadFilename . '"');
