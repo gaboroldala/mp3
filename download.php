@@ -5,7 +5,7 @@ if (isset($_POST['download'])) {
     $quality = $_POST['quality'];
 
     // YouTube API kulcs
-    $apiKey = 'AIzaSyA2X8VdQZyrOc4aicglzJB3EpSZFJwdP7w';
+    $apiKey = 'AIzaSyCg3dVhw2QniL6p7RAgiJ4JoWXq0DqjCKg';
 
     // YouTube videó információ lekérése
     $videoId = getVideoId($youtubeLink);
