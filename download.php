@@ -33,7 +33,7 @@ function getVideoId($link) {
 
 // YouTube videó információ lekérése a YouTube API-val
 function getVideoInfo($videoId) {
-    $apiKey = 'AIzaSyCg3dVhw2QniL6p7RAgiJ4JoWXq0DqjCKg'; // Helyettesítsd be a saját YouTube API kulcsoddal
+    $apiKey = 'AIzaSyD8DRjDK1UMDiKmwPMygljSswQjVZgBPvw'; // Helyettesítsd be a saját YouTube API kulcsoddal
     $url = 'https://www.googleapis.com/youtube/v3/videos?id=' . $videoId . '&key=' . $apiKey . '&part=snippet';
     $response = file_get_contents($url);
     $data = json_decode($response, true);
