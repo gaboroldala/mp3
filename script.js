@@ -10,7 +10,8 @@ document.getElementById('downloadForm').addEventListener('submit', function(even
 
   var link = document.createElement('a');
   link.href = downloadUrl;
-  link.download = 'downloaded_file';
+  link.setAttribute('download', 'zene.' + fileType);  // A fájl neve: zene.mp3 vagy zene.mp4
+  link.style.display = 'none';
   document.body.appendChild(link);
   link.click();
   document.body.removeChild(link);
