@@ -5,7 +5,7 @@ if (isset($_POST['download'])) {
     $quality = $_POST['quality'];
 
     // YouTube API kulcs
-    $apiKey = 'AIzaSyD8DRjDK1UMDiKmwPMygljSswQjVZgBPvw';
+    $apiKey = 'AIzaSyC9srLv0xVRwCrhYj6BT66_LdzKBEnv58c';
 
     // YouTube videó információ lekérése
     $videoId = getVideoId($youtubeLink);
@@ -14,7 +14,7 @@ if (isset($_POST['download'])) {
     if ($videoInfo) {
         $title = $videoInfo['title'];
         $extension = ($fileType === 'audio') ? 'mp3' : 'mp4';
-        $filename = sanitizeFilename($title) . '.' . $extension;
+        $filename = ($fileType === 'audio') ? 'zene.' . $extension : 'video.' . $extension;
 
         // Letöltési folyamat
         $downloadUrl = ($fileType === 'audio') ? $videoInfo['audioUrl'] : $videoInfo['videoUrl'];
@@ -49,20 +49,11 @@ function getVideoInfo($videoId, $apiKey) {
     return false;
 }
 
-// Biztonságos fájlnév létrehozása
-function sanitizeFilename($filename) {
-    $filename = preg_replace('/[^a-zA-Z0-9\s\-_.]/', '', $filename);
-    $filename = str_replace(' ', '_', $filename);
-    return $filename;
-}
-
 // Fájl letöltése
 function downloadFile($url, $filename) {
-    $extension = pathinfo($url, PATHINFO_EXTENSION);
-    $downloadFilename = ($extension === 'mp3' || $extension === 'mp4') ? 'zene.' . $extension : $filename;
     header('Content-Description: File Transfer');
     header('Content-Type: application/octet-stream');
-    header('Content-Disposition: attachment; filename="' . $downloadFilename . '"');
+    header('Content-Disposition: attachment; filename="' . $filename . '"');
     readfile($url);
     exit;
 }
